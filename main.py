@@ -81,7 +81,6 @@ async def read_content(content_filter: Filter):
     exclude_tr = True if "tr" in content_filter.exclude_format else False
 
     message = None
-
     for filename in glob.iglob(target_dir + '**/**', recursive=True):
         if not os.path.isdir(filename):
             if "/verse/" in filename and exclude_verse:
