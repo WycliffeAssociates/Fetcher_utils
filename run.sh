@@ -12,7 +12,7 @@ fi
 
 shopt -s expand_aliases
 
-alias op="docker run -e OP_SERVICE_ACCOUNT_TOKEN 1password/op:2 op"
+alias op="docker run --rm -e OP_SERVICE_ACCOUNT_TOKEN 1password/op:2 op"
 
 # Log in to 1password CLI
 
