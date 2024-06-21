@@ -26,5 +26,5 @@ export CONTENT_URL=https://audio-content.bibleineverylanguage.org/
 export NAMESPACE_CONNECTION_STR=$(op read "op://AppDev Scripture Accessibility/languageapi-bus-con/$DEPLOY_ENV/conn_string")
 
 docker compose down
-docker compose up
+docker compose up --build
 docker compose down

@@ -218,6 +218,5 @@ async def main():
     await read_content(content_filter)
     sys.exit(0)
 
-
 if __name__ == "__main__":
     asyncio.run(main())
