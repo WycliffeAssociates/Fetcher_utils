@@ -11,5 +11,5 @@ services:
     command: python main.py --language_id en --resource_id ulb --exclude_format wav cue --dry_run
 
 volumes:
-  ${FETCHER_VOL}:
+  audiobieldev_fetcher-content:
     external: true
