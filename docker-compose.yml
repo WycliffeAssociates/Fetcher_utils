@@ -4,8 +4,12 @@ services:
       - ${FETCHER_VOL}:/content
     build: .
     environment:
-      QUEUE_NAME=${QUEUE_NAME}
-      CONTENT_DIR=${CONTENT_DIR}
-      CONTENT_URL=${CONTENT_URL}
-      NAMESPACE_CONNECTION_STR=${NAMESPACE_CONNECTION_STR}
+      - QUEUE_NAME=${QUEUE_NAME}
+      - CONTENT_DIR=${CONTENT_DIR}
+      - CONTENT_URL=${CONTENT_URL}
+      - NAMESPACE_CONNECTION_STR=${NAMESPACE_CONNECTION_STR}
     command: python main.py --language_id en --resource_id ulb --exclude_format wav cue --dry_run
+
+volumes:
+  ${FETCHER_VOL}:
+    external: true
