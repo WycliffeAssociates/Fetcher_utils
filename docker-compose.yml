@@ -8,7 +8,10 @@ services:
       - CONTENT_DIR=${CONTENT_DIR}
       - CONTENT_URL=${CONTENT_URL}
       - NAMESPACE_CONNECTION_STR=${NAMESPACE_CONNECTION_STR}
-    command: python main.py --language_id en --resource_id ulb --exclude_format wav cue --dry_run
+      - FLAGS=${FLAGS}
+      - PYTHONUNBUFFERED=1
+    # command: python main.py --language_id en --resource_id ulb --exclude_format wav cue --dry_run
+    command: python main.py ${FLAGS}
 
 volumes:
   audiobieldev_fetcher-content:
