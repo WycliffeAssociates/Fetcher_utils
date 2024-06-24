@@ -207,13 +207,13 @@ async def send_messages(messages):
 
 
 async def main():
+    print("Starting...")
     content_filter = create_arg_parser()
-
+    print("Args: ", content_filter)
     required_vars = ["NAMESPACE_CONNECTION_STR", "QUEUE_NAME", "CONTENT_DIR", "CONTENT_DIR"]
     for var in required_vars:
         if var not in os.environ:
             sys.exit(f"{var} is not defined")
-    print(content_filter)
     await read_content(content_filter)
     sys.exit(0)
 
