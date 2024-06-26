@@ -84,7 +84,6 @@ async def read_content(content_filter: Filter):
     message = None
     for filename in glob.iglob(target_dir + '**/**', recursive=True):
         if not os.path.isdir(filename):
-            print(filename)
             if "/verse/" in filename and exclude_verse:
                 continue
 
@@ -141,6 +140,7 @@ async def read_content(content_filter: Filter):
             print(item['url'])
             items.append(item)
     messages = []
+    print(f"items len is {len(items)}")
 
     if message is not None:
         # chunks are done in about this size because azure service bus has a 256kb  size limit, and unchunked a nt in all file types and qualities is 3000+ files, would be over limit. Some prelim testing saw this number of urls consistently come in around 225 kb give or take a little. 
