@@ -120,7 +120,9 @@ async def read_content(content_filter: Filter):
                     "domain": "scripture",
                     "resourceType": "bible",
                     "namespace": "audio_biel",
-                    "files": []
+                    "files": [],
+                    # The session identifier of the message for a sessionful entity. The creates FIFO behavior for subscriptions
+                    "session_id": f"audio_biel_{parts.language_id}_{parts.resource_id}"
                 }
 
             item = {
@@ -141,9 +143,11 @@ async def read_content(content_filter: Filter):
 
     if message is not None:
         # chunks are done in about this size because azure service bus has a 256kb  size limit, and unchunked a nt in all file types and qualities is 3000+ files, would be over limit. Some prelim testing saw this number of urls consistently come in around 225 kb give or take a little. 
-        chunks = split_array(items, 800)
-        for chunk in chunks:
+        chunks = split_array(items, 700)
+        for i, chunk in enumerate(chunks):
             chunk_message = message.copy()
+            # Just for debugging fifo in local dev
+            chunk_message["order"] = i+1; 
             chunk_message["files"] = chunk
             messages.append(chunk_message)
 
@@ -193,12 +197,16 @@ async def send_messages(messages):
         conn_str=NAMESPACE_CONNECTION_STR,
         logging_enable=True
     ) as service_bus_client:
-        sender = service_bus_client.get_queue_sender(queue_name=QUEUE_NAME)
+        sender = service_bus_client.get_topic_sender(topic_name=QUEUE_NAME)
         async with sender:
             batch_message = await sender.create_message_batch()
             for message in messages:
                 try:
-                    batch_message.add_message(ServiceBusMessage(json.dumps(message)))
+                    bus_message = ServiceBusMessage(
+                        json.dumps(message), 
+                        session_id=message["session_id"]
+                        );
+                    batch_message.add_message(bus_message)
                 except ValueError:
                     break
 

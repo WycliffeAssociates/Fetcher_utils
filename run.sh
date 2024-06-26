@@ -23,8 +23,7 @@ export OP_SERVICE_ACCOUNT_TOKEN=$OP_SERVICE_ACCOUNT_TOKEN
 export QUEUE_NAME=audiobiel
 export CONTENT_DIR=/content
 export CONTENT_URL=https://audio-content.bibleineverylanguage.org/
-export NAMESPACE_CONNECTION_STR=$(op read "op://AppDev Scripture Accessibility/languageapi-bus-con/$DEPLOY_ENV/conn_string")
-
+export NAMESPACE_CONNECTION_STR=$(op read "op://AppDev Scripture Accessibility/languageapi-bus-send-connstring/$DEPLOY_ENV/conn_string")
 docker compose down
 docker compose build
 docker compose up
