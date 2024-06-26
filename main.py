@@ -82,8 +82,15 @@ async def read_content(content_filter: Filter):
 
     # Common data for each bus message goes on message
     message = None
+    all_files = []
     for filename in glob.iglob(target_dir + '**/**', recursive=True):
         if not os.path.isdir(filename):
+            all_files.append(filename)
+
+    # sort for debugging logs
+    all_files.sort();     
+    print(f"all files on cdn len is {len(all_files)}")
+    for filename in all_files: 
             if "/verse/" in filename and exclude_verse:
                 continue
 
