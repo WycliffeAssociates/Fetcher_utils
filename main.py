@@ -80,9 +80,11 @@ async def read_content(content_filter: Filter):
     exclude_cue = True if "cue" in content_filter.exclude_format else False
     exclude_tr = True if "tr" in content_filter.exclude_format else False
 
+    # Common data for each bus message goes on message
     message = None
     for filename in glob.iglob(target_dir + '**/**', recursive=True):
         if not os.path.isdir(filename):
+            print(filename)
             if "/verse/" in filename and exclude_verse:
                 continue
 
@@ -136,9 +138,8 @@ async def read_content(content_filter: Filter):
                 "bookSlug": parts.book_slug.capitalize(),
                 "chapter": parts.chapter
             }
-
+            print(item['url'])
             items.append(item)
-
     messages = []
 
     if message is not None:
