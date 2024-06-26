@@ -90,8 +90,6 @@ async def read_content(content_filter: Filter):
     # sort for debugging logs
     all_files.sort(); 
     print(f"all files on cdn len is {len(all_files)}")
-    print("all files on cdn")
-    for file in all_files: print (file)    
     for filename in all_files: 
             if "/verse/" in filename and exclude_verse:
                 continue
